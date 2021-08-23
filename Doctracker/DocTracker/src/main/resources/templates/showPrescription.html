@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Provided Prescription</title>
+<link rel="icon" type="image/png" th:href="@{../static/logo/logo.png}">
+<style>
+div{
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+   padding: 40px;
+   border: 5px solid black;
+   height:600px;
+   width:500px;
+}
+table{
+  font-family: arial, sans-serif;
+  width:100%;
+}
+</style>
+<h1>Provided Prescription : </h1>
+
+</head>
+<body>
+<form id = "form" action="#" th:object="${appointment}" method="post">
+<div align="center" class="container my-2">
+<table >
+<thead><th><hr><u>DocTracker Digital Prescription : </u>
+</th></thead>
+<tr>
+<td th:text="'Date: '+${date}"></td>
+</tr>
+<tr>
+<td th:text="'Doctor Name : ' +${doctor.user.firstName} +' '+${doctor.user.lastName}"></td>
+</tr>
+<tr><td th:text="${prescription}"></td></tr>
+</table>
+</div>
+</form>
+<button th:onclick="'print();'">Print this page</button>
+</body>
+<script>
+function print(){
+	console.log("asi");
+	window.print();
+	break print;
+}
+</script>
+
+</html>

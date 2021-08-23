@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <title>DocTracker</title>
+    <link rel="icon" type="image/png" th:href="@{../static/logo/logo.png}">
+
+    <style>
+            @import 'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300';
+
+            .{
+                margin:0;
+                padding:0;
+            }
+
+            body {
+              width: 100%;
+              height: 100%;
+              overflow: hidden;
+              margin: 0;
+              display: flex;
+              flex-direction: column;
+              flex-wrap: wrap;
+              font-family: 'Open Sans Condensed', sans-serif;
+              background-color: #bfd4db;
+            }
+
+
+            .logo{
+                display: flex;
+                justify-content: space-around;
+                padding: 10px;
+            }
+            .title{
+                display:flex;
+                justify-content:space-around;
+                color: #3C3C3C;
+                vertical-align: middle;
+                font-family: 'Open Sans', sans-serif;
+                font-family: 'Roboto', sans-serif;
+                font-size:2em;
+                font-weight: bold;
+                letter-spacing:5px;
+            }
+
+            .box-1 {
+                display:flex;
+		        justify-content:space-around;
+             }
+
+            .btn {
+              line-height: 50px;
+              height: 70px;
+              text-align: center;
+              width: 200%;
+              cursor: pointer;
+
+            }
+
+            a{
+              text-decoration: none;
+              font-size:3rem;
+              color: #3C3C3C;
+            }
+
+            .btn-one {
+              padding-top:5px;
+              vertical-align: middle;
+              color: #3C3C3C;
+              font-size:3rem;
+              transition: all 0.6s;
+              position: relative;
+              letter-spacing:2px;
+              font-weight:bold;
+            }
+            .btn-one {
+
+              transition: all 0.6s;
+            }
+            .btn-one::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              z-index: 1;
+              opacity: 0;
+              transition: all 0.6s;
+              border-top-width: 1px;
+              border-bottom-width: 1px;
+              border-top-style: solid;
+              border-bottom-style: solid;
+              border-top-color: rgba(255,255,255,0.5);
+              border-bottom-color: rgba(255,255,255,0.5);
+              transform: scale(0.1, 1);
+            }
+            .btn-one:hover {
+              letter-spacing: 2px;
+            }
+            .btn-one:hover::before {
+              opacity: 1;
+              transform: scale(1, 1);
+            }
+            .btn-one::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              z index:1;
+              transition: all 0.6s;
+              background-color: rgba(255,255,255,0.2);
+            }
+            .btn-one:hover::after {
+              opacity: 0;
+              transform: scale(0.1, 1);
+            }
+        </style>
+
+</head>
+<body>
+<br>
+<br>
+<div class="logo">
+    <img src="/static/logo/logo.png" alt="logo">
+</div>
+<div class="title">
+    <h1>DocTracker</h1>
+</div>
+<br>
+<br>
+
+
+<!-- Hover #1 -->
+<div class="box-1">
+
+        <a th:href="@{/login}">
+            <div class="btn btn-one">
+                Login
+            </div>
+        </a>
+
+        <a th:href="@{/signUp}">
+            <div class="btn btn-one">
+                Sign Up
+            </div>
+        </a>
+</div>
+</body>
+</html>

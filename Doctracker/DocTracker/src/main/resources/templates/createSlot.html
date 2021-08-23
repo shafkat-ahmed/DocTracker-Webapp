@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <meta charset="ISO-8859-1">
+    <title>Create Slot</title>
+    <link rel="icon" type="image/png" th:href="@{../static/logo/logo.png}">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <style>
+    table{
+    	text-align:center;
+    	letter-spacing:2.5px;
+    
+    }
+    input{
+    border-radius:7px;
+    background-color:#8ee4af;
+    border-color:#379683;
+    text-align:center;
+    }
+    td{
+    font-weight:bold;
+    color:#eaffea;
+    padding:0px;
+    }
+    
+    .tableBody{
+    display:flex;
+    justify-content:space-around;
+    margin:auto;
+    align-content:center;
+    background-color: #379683;
+    border-radius: 10px;
+    width:50%;
+    height:475px;
+    
+    }
+    
+    
+    </style>
+
+
+    <style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing: border-box;
+		}
+
+		body{
+			background-color:#8ee4af;
+		}
+
+
+		.title{
+			color: #f0f0ff;
+			float: left;
+			padding: 18px 10px;
+  			vertical-align: middle;
+			font-family: 'Roboto', sans-serif;
+			font-size:20px;
+			font-weight: bold;
+			letter-spacing:3px;
+
+		}
+		.full_logo{
+			display: flex;
+		}
+
+		nav{
+			padding: 10px;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			min-height: 8vh;
+			border-radius:7px;
+			background-color: #379683;
+			margin-top:5px;
+			margin-right:5px;
+			margin-left:5px;
+
+		}
+
+		nav li{
+			list-style:none;
+		}
+
+		.nav_links{
+			display: flex;
+			justify-content: space-around;
+			width: 40%
+
+		}
+
+		.nav_links a{
+			color: #f0f0ff;
+			font-family: 'Roboto', sans-serif;
+			font-size:18px;
+			text-decoration: none;
+			letter-spacing:3px;
+		}
+
+		.nav_links a:hover{
+
+			font-weight: bold;
+		}
+
+		.burger{
+			display:none;
+		}
+
+		.burger div{
+			width: 25px;
+			height: 3px;
+			background-color: #f0f0ff;
+			margin: 5px;
+			transition: all 0.3s ease;
+		}
+
+		@media screen and (max-width:1130px){
+			.nav_links{
+				width: 50%;
+			}
+		}
+
+		@media screen and (max-width:768px){
+			body{
+				overflow-x: hidden;
+			}
+			.nav_links{
+				position: absolute;
+				right: -5px;
+				top:8vh;
+				height: 92vh;
+				background-color: #379683;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width:38%;
+				transform: translateX(100%);
+				transition: transform 0.5s ease-in;
+				margin-right:5px;
+			}
+
+			.burger{
+				display: block;
+				cursor: pointer;
+			}
+		}
+
+		.nav_active{
+			transform: translateX(0%);
+		}
+
+		@keyframes navLinkFade{
+			from{
+				opacity:0;
+				transform:translateX(50px);
+			}
+			to{
+				opacity:1;
+				transform:translateX(0px);
+			}
+		}
+
+		.toggle .line1{
+			transform: rotate(-45deg) translate(-5px,6px);
+		}
+		.toggle .line2{
+			opacity: 0;
+		}
+		.toggle .line3{
+			transform: rotate(45deg) translate(-5px,-6px);
+		}
+
+		button,.logout {
+		  font-size: 1em;
+		  font-family: 'Oswald', sans-serif;
+		  overflow: hidden;
+		  letter-spacing: 3px;
+		  transition: opacity .45s;
+		  -webkit-transition: opacity .35s;
+		  width: 100px;
+		  height:25px;
+		  background-color: #05386b;
+		  border-radius:10px;
+		  color:white;
+		  opacity: 0.8;
+		  border:none;
+
+		}
+
+		button:hover,.logout:hover {
+		  width: 100px;
+		  height:25	px;
+		  opacity: 1;
+		  cursor: pointer;
+		}
+		a{
+		    padding: 20px;
+		}
+
+
+	</style>
+
+    <style>
+        .createSlot{
+            display:flex;
+            justify-content: space-around;
+            padding:30px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+    <div class="full_logo">
+        <div class="logo">
+            <a href="managerHome" style="cursor: pointer;">
+                <img alt="home" title="logo"
+                     width="75" height="80"
+                     th:src="@{../static/logo/logo.png}" />
+            </a>
+        </div>
+        <div class="title">
+            <h1>DocTracker</h1>
+        </div>
+    </div>
+    <ul class="nav_links">
+        <li>
+            <a th:href="@{/manager/viewSlot}"> View Slots</a>
+        </li>
+        <li>
+            <form name="logoutForm" th:action="@{/logout}" method="post">
+                <input class="logout" type="submit" value="Log Out"/>
+            </form>
+        </li>
+
+    </ul>
+    <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="createSlot">
+        <h2>Create Slot</h2>
+    </div>
+
+<form action="#" th:action="@{/manager/saveSlot}" th:object="${slot}" method="POST" id="form">
+<div class="tableBody">
+<table>
+<tr><td>Date:</td></tr>
+<tr><td><input type="date" th:field="${slot.date}" placeholder="Date"/></td></tr>
+<tr><td>Start Time:</td></tr>
+<tr><td><input type="datetime-local" id="sd" placeholder="Start Time"/></td></tr>
+<input type="hidden" th:field="${slot.startTime}" id="sd2"/>
+<tr><td>End Time:</td></tr>
+<tr><td><input type="datetime-local" id="ed"  placeholder="End Time"/><td></tr>
+<input type="hidden" th:field="${slot.endTime}" id="ed2"/>
+<tr><td>Patient Capacity:</td></tr>
+<tr><td><input type="number" th:field="${slot.patientCount}" placeholder="Patient Count"/></td></tr>
+<input type="hidden" th:field="${slot.docId}" th:value="${docId}" id="docId"/>
+<tr><td><button th:onclick="'save('+${docId}+');'">Save</button></td></tr>
+</table>
+</div>
+</form>
+<!--<button th:onclick="'check('+${docId}+');'">check</button>-->
+</div>
+</body>
+<script>
+function check(Id)
+{
+  
+  var x=document.getElementById('sd').value;
+  var y=document.getElementById('ed').value;
+  document.getElementById("sd2").value=x.replace("T","-");
+  document.getElementById("ed2").value=y.replace("T","-");
+  console.log( document.getElementById("sd2").value);
+  console.log( document.getElementById("ed2").value);
+  document.getElementById('docId').value=Id;
+  console.log(document.getElementById('docId').value);
+  console.log(Id);
+  
+}
+function save(Id)
+{
+  
+	  var x=document.getElementById('sd').value;
+	  var y=document.getElementById('ed').value;
+	  document.getElementById("sd2").value=x.replace("T","-");
+	  document.getElementById("ed2").value=y.replace("T","-");
+	  console.log( document.getElementById("sd2").value);
+	  console.log( document.getElementById("ed2").value);
+	  document.getElementById('docId').value=Id;
+	  console.log(document.getElementById('docId').value);
+	  console.log(Id);
+ 	  document.forms['form'].submit();
+  
+}
+</script>
+
+<script>
+    const navSlide = () => {
+		const burger= document.querySelector('.burger');
+		const nav= document.querySelector('.nav_links');
+		const navLinks= document.querySelectorAll('.nav_links li');
+
+		burger.addEventListener('click',()=>{
+			nav.classList.toggle('nav_active');
+
+			burger.classList.toggle('toggle');
+		});
+
+	}
+	navSlide();
+</script>
+
+</html>

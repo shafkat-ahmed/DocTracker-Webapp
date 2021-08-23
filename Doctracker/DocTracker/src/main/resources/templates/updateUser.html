@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Update</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+ 	
+	<link rel="icon" type="image/png" th:href="@{../static/logo/logo.png}">
+   <style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing: border-box;
+		}
+
+		body{
+			background-color:#F6F5Ef;
+		}
+
+		.title{
+			color: #f0f0ff;
+			float: left;
+			padding: 18px 10px;
+  			vertical-align: middle;
+			font-family: 'Roboto', sans-serif;
+			font-size:20px;
+			font-weight: bold;
+			letter-spacing:3px;
+
+		}
+		.full_logo{
+			display: flex;
+		}
+
+		nav{
+			padding: 10px;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			min-height: 8vh;
+			border-radius:7px;
+			background-color: #C3B091;
+			margin-top:5px;
+			margin-right:5px;
+			margin-left:5px;
+
+		}
+
+		nav li{
+			list-style:none;
+		}
+
+		.nav_links{
+			display: flex;
+			justify-content: space-around;
+			width: 40%
+
+		}
+
+		.nav_links a{
+			color: #f0f0ff;
+			font-family: 'Roboto', sans-serif;
+			font-size:18px;
+			text-decoration: none;
+			letter-spacing:3px;
+		}
+
+		.nav_links a:hover{
+
+			font-weight: bold;
+		}
+
+		.burger{
+			display:none;
+		}
+
+		.burger div{
+			width: 25px;
+			height: 3px;
+			background-color: #f0f0ff;
+			margin: 5px;
+			transition: all 0.3s ease;
+		}
+
+		@media screen and (max-width:1130px){
+			.nav_links{
+				width: 50%;
+			}
+		}
+
+		@media screen and (max-width:768px){
+			body{
+				overflow-x: hidden;
+			}
+			.nav_links{
+				position: absolute;
+				right: -5px;
+				top:8vh;
+				height: 92vh;
+				background-color: #C3B091;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width:38%;
+				transform: translateX(100%);
+				transition: transform 0.5s ease-in;
+				margin-right:5px;
+			}
+
+			.burger{
+				display: block;
+				cursor: pointer;
+			}
+		}
+
+		.nav_active{
+			transform: translateX(0%);
+		}
+
+		@keyframes navLinkFade{
+			from{
+				opacity:0;
+				transform:translateX(50px);
+			}
+			to{
+				opacity:1;
+				transform:translateX(0px);
+			}
+		}
+
+		.toggle .line1{
+			transform: rotate(-45deg) translate(-5px,6px);
+		}
+		.toggle .line2{
+			opacity: 0;
+		}
+		.toggle .line3{
+			transform: rotate(45deg) translate(-5px,-6px);
+		}
+		.logout {
+		  font-size: 1em;
+		  font-family: 'Oswald', sans-serif;
+		  overflow: hidden;
+		  letter-spacing: 3px;
+		  transition: opacity .45s;
+		  -webkit-transition: opacity .35s;
+		  width: 100px;
+		  height:25px;
+		  background-color: #A9A9A9;
+		  border-radius:10px;
+		  color:white;
+		  opacity: 0.75;
+
+		}
+
+		.logout:hover {
+		  width: 100px;
+		  height:25	px;
+		  opacity: 1;
+		  cursor: pointer;
+		}
+
+
+    </style>
+	
+	<style>
+	 .updateBody {
+       width:40%;
+       height:500px;
+       text-align:center;
+       margin-left:auto;
+       margin-right:auto;
+       background-color:#C3B091;
+       border-radius:10px;
+       opacity: 0.8;
+  }
+  
+  body{
+			background-color:#F6F5Ef;
+			
+		}
+  table {
+		color: black;
+		margin-left:auto;
+        margin-right:auto;
+        margin-top:5%;
+        margin-bottom:auto;
+        font-weight:bold;
+		font-Size:130%;
+		font-family: 'Roboto', sans-serif;
+		letter-spacing: 2px;
+		}
+		td{
+		text-align:left;
+		padding:20px;
+		}
+		h1{
+		 padding: 15px;
+		 text-align: center;
+		 font-family: 'Roboto', sans-serif;
+		 letter-spacing: 2px;
+		
+		}
+		.updateButton{
+		margin-top:8%;
+		padding:5px;
+		width:100px;
+		border-radius:10px;
+	    height:40px;
+		width:100px;
+		letter-spacing: 2px;
+		 opacity:0.8;
+		 transition: all 0.4s;
+		}
+		input{
+		height:20px;
+		border-radius:5px;
+		text-align:center;
+		font-family: 'Roboto', sans-serif;
+		background-color:#F6F5Ef;
+		}
+		.updateButton:hover{
+		font-weight:bold;
+		cursor:pointer;
+	    background-color:black;
+	    color:#F6F5Ef;
+	    opacity:1;
+	    transition: all 0.4s;
+		}
+	
+	
+	</style>
+</head>
+<body>
+<nav>
+    <div class="full_logo">
+        <div class="logo">
+            <a th:href="@{/user/userHome}" style="cursor: pointer;">
+                <img alt="home" title="logo"
+                     width="75" height="80"
+                     th:src="@{../static/logo/logo.png}" />
+            </a>
+        </div>
+        <div class="title">
+            <h1>DocTracker</h1>
+        </div>
+    </div>
+    <ul class="nav_links">
+        <li>
+            <a th:href="@{/user/viewAppointments}"> My Appointments</a>
+        </li>
+        <li>
+            <a th:href="@{/user/viewPrevAppointments}"> My Prescriptions</a>
+        </li>
+        <li>
+            <a th:href="@{/updateUser}">Update Profile</a>
+        </li>
+        <li>
+            <form name="logoutForm" th:action="@{/logout}" method="post">
+                <input class="logout" type="submit" value="Log Out"/>
+            </form>
+        </li>
+
+    </ul>
+    <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+</nav>
+<h1>Update User</h1>
+<div class="updateBody">
+<form action="#" th:action="@{/saveUser}" th:object="${user}" method="POST" id="form">
+<table>
+<br>
+<tr>
+<td>First Name</td><td><input type="text" th:field="*{firstName}" minlength="1" required placeholder="First Name"/></td>
+</tr>
+<tr>
+<td>Last Name</td><td><input type="text" th:field="*{lastName}" minlength="1" required placeholder="Last Name"/></td>
+</tr>
+<input type="hidden" th:field="*{userName}" placeholder="Username"/>
+<tr>
+<td>Password</td><td><input type="password" minlength="5" required th:field="*{password}"/></td>
+</tr>
+<tr>
+</table>
+<input type="hidden" th:field="*{id}"/>
+<input type="hidden" th:field="*{active}"/>
+<input type="hidden" th:field="*{roles}"/>
+<input type="submit" class="updateButton" value="Update">
+</form>
+</div>
+</body>
+
+<script>
+		const navSlide = () => {
+		const burger= document.querySelector('.burger');
+		const nav= document.querySelector('.nav_links');
+		const navLinks= document.querySelectorAll('.nav_links li');
+
+		burger.addEventListener('click',()=>{
+			nav.classList.toggle('nav_active');
+
+			burger.classList.toggle('toggle');
+		});
+
+	}
+	navSlide();
+</script>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Set Appointment</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="icon" type="image/png" th:href="@{../static/logo/logo.png}">
+    <style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing: border-box;
+		}
+		#map{
+        height: 500px;
+        width:90%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+		body{
+			background-color:#F6F5Ef;
+		}
+		.selectButton{
+		width:30%;
+		height:40px;
+		border-radius: 5px;
+		background-color: #6DB471;
+		border: none;
+		opacity:0.8;
+		}
+		
+		.selectButton:hover {
+		opacity:1;
+		cursor: pointer;
+		}
+
+		.title{
+			color: #f0f0ff;
+			float: left;
+			padding: 18px 10px;
+  			vertical-align: middle;
+			font-family: 'Roboto', sans-serif;
+			font-size:20px;
+			font-weight: bold;
+			letter-spacing:3px;
+
+		}
+		.full_logo{
+			display: flex;
+		}
+
+		nav{
+			padding: 10px;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			min-height: 8vh;
+			border-radius:7px;
+			background-color: #C3B091;
+			margin-top:5px;
+			margin-right:5px;
+			margin-left:5px;
+
+		}
+
+		nav li{
+			list-style:none;
+		}
+
+		.nav_links{
+			display: flex;
+			justify-content: space-around;
+			width: 40%
+
+		}
+
+		.nav_links a{
+			color: #f0f0ff;
+			font-family: 'Roboto', sans-serif;
+			font-size:18px;
+			text-decoration: none;
+			letter-spacing:3px;
+		}
+
+		.nav_links a:hover{
+
+			font-weight: bold;
+		}
+
+		.burger{
+			display:none;
+		}
+
+		.burger div{
+			width: 25px;
+			height: 3px;
+			background-color: #f0f0ff;
+			margin: 5px;
+			transition: all 0.3s ease;
+		}
+
+		@media screen and (max-width:1130px){
+			.nav_links{
+				width: 50%;
+			}
+		}
+
+		@media screen and (max-width:768px){
+			body{
+				overflow-x: hidden;
+			}
+			.nav_links{
+				position: absolute;
+				right: -5px;
+				top:8vh;
+				height: 92vh;
+				background-color: #C3B091;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width:38%;
+				transform: translateX(100%);
+				transition: transform 0.5s ease-in;
+				margin-right:5px;
+			}
+
+			.burger{
+				display: block;
+				cursor: pointer;
+			}
+		}
+
+		.nav_active{
+			transform: translateX(0%);
+		}
+
+		@keyframes navLinkFade{
+			from{
+				opacity:0;
+				transform:translateX(50px);
+			}
+			to{
+				opacity:1;
+				transform:translateX(0px);
+			}
+		}
+
+		.toggle .line1{
+			transform: rotate(-45deg) translate(-5px,6px);
+		}
+		.toggle .line2{
+			opacity: 0;
+		}
+		.toggle .line3{
+			transform: rotate(45deg) translate(-5px,-6px);
+		}
+		.logout {
+		  font-size: 1em;
+		  font-family: 'Oswald', sans-serif;
+		  overflow: hidden;
+		  letter-spacing: 3px;
+		  transition: opacity .45s;
+		  -webkit-transition: opacity .35s;
+		  width: 100px;
+		  height:25px;
+		  background-color: #A9A9A9;
+		  border-radius:10px;
+		  color:white;
+		  opacity: 0.75;
+
+		}
+
+		.logout:hover {
+		  width: 100px;
+		  height:25	px;
+		  opacity: 1;
+		  cursor: pointer;
+		}
+
+
+	</style>
+</head>
+<body>
+<nav>
+    <div class="full_logo">
+        <div class="logo">
+            <a href="userHome" style="cursor: pointer;">
+                <img alt="home" title="logo"
+                     width="75" height="80"
+                     th:src="@{../static/logo/logo.png}" />
+            </a>
+        </div>
+        <div class="title">
+            <h1>DocTracker</h1>
+        </div>
+    </div>
+    <ul class="nav_links">
+        <li>
+            <a href="viewAppointments"> My Appointments</a>
+        </li>
+        <li>
+            <a href="viewPrevAppointments"> My Prescriptions</a>
+        </li>
+        <li>
+            <a th:href="@{/updateUser/{id}(id=${id})}">Update Profile</a>
+        </li>
+        <li>
+            <form name="logoutForm" th:action="@{/logout}" method="post">
+                <input class="logout" type="submit" value="Log Out"/>
+            </form>
+        </li>
+
+    </ul>
+    <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+</nav>
+
+<div align="center" class="container my-1">
+    <h2>Please go through the information to make sure everything is correct:</h2>
+
+    <table border="2"  class="table table-striped table-responsive-md">
+        <tbody>
+        <tr>
+            <th>First name</th>
+            <td th:text="${patient.user.firstName}"></td>
+        </tr>
+        <tr>
+            <th>Last name</th>
+            <td th:text="${patient.user.lastName}"></td>
+        </tr>
+        <tr>
+            <th>Doctor</th>
+            <td th:text="${doctor.user.firstName}+' '+${doctor.user.lastName}"></td>
+        </tr>
+        <tr>
+            <th>Date of appointment</th>
+            <td th:text="${slot.date}"></td>
+        </tr>
+        <tr>
+            <th>Start time of appointment</th>
+            <td th:text="${slot.stTime}"></td>
+        </tr>
+        <tr>
+            <th>End time of appointment</th>
+            <td th:text="${slot.edTime}"></td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    </br>
+</div>
+
+</br>
+</br>
+
+<div align="center" class="container my-1">
+
+<form id = "form" action="#" th:action="@{/user/saveAppointment}" th:object="${appointment}" method="post">
+    <input type="hidden" id="slotId" th:field="*{slotId}" value="${sId}"/>
+    <input type="hidden" id="patientId" th:field="*{patientId}" value="${pId}}"/>
+    <h3>Contact number:</h3> <input type="number" minlength="11" required id="contact" th:field="*{contactNumber}">
+    <br/>
+    <br/>
+    <h3>Write a short description of your illness:</h3>
+    <textarea id="des" rows="4" cols="50" th:field="*{des}"></textarea>
+    <br/>
+    <br/>
+    <button class="selectButton" th:onclick="'create('+${sId}+','+${pId}+');'">Make Appointment</button>
+</form>
+    <br/>
+
+<!--<button th:onclick="create();">check</button>-->
+<button class="selectButton" th:onclick="'initMap('+${doctor.getLat}+','+${doctor.getLng}+');'">Find doctor on map</button>
+
+</div>
+</br>
+</br>
+</br>
+<div id="map"></div>
+</br>
+</br>
+
+<script>
+    function initMap(lati, lngi){
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoicGlhc2hwYXVsIiwiYSI6ImNrc2ZxN3R3ZDFkMHIyb3Bpa2czYm1oMWUifQ.Ckcm5H3jlOPY6ggAjqXUSQ';
+        const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        center: [lngi,lati], // starting position
+        zoom: 15 // starting zoom
+        });
+
+        // Add zoom and rotation controls to the map.
+        map.addControl(new mapboxgl.NavigationControl());
+
+        const marker = new mapboxgl.Marker({
+        color: "#04aa6d",
+        draggable: false
+        }).setLngLat([lngi, lati])
+        .addTo(map);
+
+    }
+</script>
+
+
+</body>
+<script>
+    function create(sId,pId){
+      document.getElementById('slotId').value=sId;
+      document.getElementById('patientId').value=pId;
+      console.log(document.getElementById('slotId').value);
+      console.log(document.getElementById('patientId').value);
+      document.forms['form'].submit();
+    }
+</script>
+
+<script>
+		const navSlide = () => {
+		const burger= document.querySelector('.burger');
+		const nav= document.querySelector('.nav_links');
+		const navLinks= document.querySelectorAll('.nav_links li');
+
+		burger.addEventListener('click',()=>{
+			nav.classList.toggle('nav_active');
+
+			burger.classList.toggle('toggle');
+		});
+
+	}
+	navSlide();
+</script>
+
+</html>

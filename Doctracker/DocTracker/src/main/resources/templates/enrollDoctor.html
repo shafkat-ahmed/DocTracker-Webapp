@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Enroll Doctor</title>
+<link rel="icon" type="image/png" th:href="@{../static/logo/logo.png}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+<style type="text/css">
+  .container {
+       width:40%;
+       height:570px;
+       text-align:center;
+       margin-left:auto;
+       margin-right:auto;
+       background-color:#05386b;
+       border-radius:10px;
+       opacity: 0.8;
+  }
+  
+  body{
+			background-color:#85dcba;
+			
+		}
+  table {
+		color: white ;
+		margin-left:auto;
+        margin-right:auto;
+        margin-top:5%;
+        margin-bottom:auto;
+        font-weight:bold;
+		font-Size:130%;
+		font-family: 'Roboto', sans-serif;
+		letter-spacing: 2px;
+		}
+		td{
+		text-align:left;
+		padding:15px;
+		}
+		h1{
+		 padding: 15px;
+		 text-align: center;
+		 font-family: 'Roboto', sans-serif;
+		 letter-spacing: 2px;
+		
+		}
+		button{
+		margin-top:5%;
+		padding:5px;
+		width:100px;
+		border-radius:10px;
+		border:none;
+	    height:40px;
+		width:100px;
+		letter-spacing: 2px;
+		transition: all 0.4s;
+		 opacity:0.8;
+		}
+		input{
+		height:20px;
+		border-radius:5px;
+		border-color:#05386b;
+		text-align:center;
+		font-family: 'Roboto', sans-serif;
+		background-color:#85dcba;
+		}
+		button:hover{
+		font-weight:bold;
+		cursor:pointer;
+	    background-color:black;
+	    color:#F6F5Ef;
+	    transition: all 0.4s;
+	    opacity:1;
+		}
+
+</style>
+
+</head>
+<body>
+<h1>Enroll doctor</h1>
+<div class="container">
+<table>
+<br>
+<form action="#" th:action="@{/saveDoctor}" th:object="${user}" method="POST" id="form">
+<tr>
+<td>First Name</td><td><input type="text" th:field="*{firstName}" required placeholder="First Name"/></td>
+</tr>
+<tr>
+<td>Last Name</td><td><input type="text" th:field="*{lastName}"  placeholder="Last Name"/></td>
+</tr>
+<tr>
+<td>Username</td><td><input type="text" th:field="*{userName}" required placeholder="Username"/></td>
+</tr>
+<tr>
+<td>Password</td><td><input type="password" th:field="*{password}" minlength="5" required placeholder="Password"/>
+</tr>
+<tr>
+<td>Field</td><td><input type="text" th:field="*{doctor.field}" required  placeholder="Field"/>
+</tr>
+<tr>
+<td>Degree Description</td><td><input type="text" th:field="*{doctor.des}" required placeholder="Description"/>
+</tr>
+<tr>
+<td>Location Link</td><td><input type="text" required placeholder="Link" id="link"/>
+</tr>
+<input type="hidden" th:field="*{active}"/>
+<input type="hidden" th:field="*{roles}" value="ROLE_DOCTOR"/>
+<input type="hidden" step="0.0000001" th:field="*{doctor.lat}" id="lat"/>
+<input type="hidden" step="0.0000001" th:field="*{doctor.lng}" id="lng"/>
+</form>
+</table>
+<button th:onclick="'save();'">Save</button>
+</div>
+</body>
+<script type="text/javascript">
+function save()
+{
+  
+	  var link = document.getElementById('link').value;
+	  var link1= link.split("@");
+	  
+	  var link2=link1[1].split(",");
+	  var lng=parseFloat(link2[1]);
+	  var lat=parseFloat(link2[0]);
+	  
+	  document.getElementById('lng').value=lng;
+	  document.getElementById('lat').value=lat;
+	  
+ 	  document.forms['form'].submit();
+  
+}
+</script>
+</html>
+
+
+
